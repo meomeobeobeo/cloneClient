@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@font-face {
+  font-family: Circular-Std-Book;
+  src: url(./font/Circular-Std-Book.ttf);
+}
+
+#root {
+  font-family: 'Circular-Std-Book', Tahoma, Geneva, Verdana, sans-serif;
+  --white-color: #fff;
+  --lightGray: #f4f5f7;
+  --lightBlue: #4fade6;
+  --blue: #0747a6;
+}
