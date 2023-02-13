@@ -11,7 +11,7 @@ import clsx from "clsx"
 
 
 const ControlRoute = () => {
-    const [isActive, setIsActive] = useState(false)
+   
     let {pathname} = useLocation()
 
     return (

@@ -31,6 +31,8 @@
   width: 100%;
   justify-content: flex-start;
   align-items: center;
+  height: 48px;
+  cursor: pointer;
 }
 
 .action_text {
@@ -53,7 +55,6 @@
 
 .icons {
   width: 64px;
-
   display: flex;
   justify-content: center;
   align-items: center;
