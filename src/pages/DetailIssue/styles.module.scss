@@ -1,0 +1,48 @@
+.modal{
+    overflow: auto;
+}
+.modalBackground{
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+    z-index: 999;
+    overflow-y: auto;
+
+    
+}
+.modalContainer{
+    background-color: #fff;
+    color: #5e6c84;
+    position: fixed;
+    top: 3%;
+    left: 15%;
+    margin: 0;
+    z-index: 1000;
+    padding: 16px;
+    width: 1040px;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    border-radius: 8px;
+    height:100vh;
+    
+
+
+}
+
+
+@keyframes slide{
+    from   {
+        left: -700;
+       
+    }
+    to {
+        left: 0;
+       
+    }
+}

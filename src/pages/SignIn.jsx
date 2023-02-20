@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { signIn } from "../action/authAction";
 import { GlobalContex } from "../App";
-import Message from "../components/Message/Message";
+import ModalCreateIssue from "../components/ModalCreateIssue/ModalCreateIssue";
 
 const SignIn = () => {
   console.log('sign in')
@@ -16,20 +16,18 @@ const SignIn = () => {
   
  
   // notify
-  const notifySignIn = () => {
-    return toast.success("Success login. !", {
-      position: toast.POSITION.TOP_RIGHT,
-    });
-  };
+  
 
   const handleSignIn = (data) => {
     dispatch(signIn({data , navigate}));
-    notifySignIn();
+   
   };
   return (
     <div className="flex flex-col w-[70%] h-[100vh] mx-auto bg-slate-50  ">
+
       {/* form */}
       <div className="flex flex-col m-auto pb-[160px]">
+        <ModalCreateIssue/>
         <div className="flex flex-col mx-auto mb-[42px]   ">
           <h1 className="text-[40px] ">Sign in</h1>
           <div className="text-sm text-gray-400">hello please sign in.</div>
@@ -77,7 +75,7 @@ const SignIn = () => {
           </div>
         </div>
       </div>
-      <ToastContainer />
+     
     </div>
   );
 };

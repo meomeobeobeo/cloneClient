@@ -16,6 +16,11 @@ import SignUp from "./pages/SignUp";
 import { redirect } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { getListProjects } from "./action/projectAction";
+import SearchIssue from "./pages/SearchIssue/SearchIssue";
+import DetailIssues from "./pages/DetailIssue/DetailIssues";
+import CreateIssue from "./pages/CreateIssue/CreateIssue";
+import NotFont from "./pages/NotFond/NotFont";
+import Home from "./pages/Home/Home";
 
 export const GlobalContex = createContext();
 function App() {
@@ -23,7 +28,7 @@ function App() {
   const data = useSelector((state) => state.project.projectInfor?.issues);
   const dispatch = useDispatch();
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("auth")));
-  console.log(user);
+
   useEffect(() => {
     if (user) {
       dispatch(getListProjects(user?.user?.id));
@@ -53,11 +58,20 @@ function App() {
         {true && (
           <div style={{ width: "76%" }}>
             <Routes>
-              <Route path="/" element={<Board />} />
-              <Route path="/project/board" element={<Board />}></Route>
+              <Route path="/" element={<Home />} />
+              <Route path="/project/board/:projectId" element={<Board />}></Route>
               <Route path="/project/settings" element={<Projectinfor />} />
               <Route path="/signIn" element={<SignIn />} />
               <Route path="/signUp" element={<SignUp />} />
+              <Route path = {`/board/issues/:issueId`} element={<DetailIssues />} />
+              <Route path = {`/project/create/:projectId`} element={<CreateIssue />} />
+              <Route path="/search/issues/:projectId" element={<SearchIssue />} />
+              <Route path="/page/notFond" element={<NotFont />} />
+              <Route path="*" element={<NotFont />} />
+
+              
+
+              
             </Routes>
           </div>
         )}

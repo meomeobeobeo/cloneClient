@@ -1,0 +1,76 @@
+.modal {}
+
+.modalBackground {
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+    z-index: 999;
+}
+
+.modalContainer {
+    background-color: #fff;
+    color: #5e6c84;
+    position: fixed;
+    top: 0;
+    left: 0px;
+    margin: 0;
+    z-index: 1000;
+    padding: 30px;
+    width: 600px;
+    height: 100%;
+    animation: slide 2s ;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    
+   
+
+}
+
+.modalControl {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #5e6c84;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    transition:all 0.1s ease 0s;
+    font-size: 25px;
+    border: 1px solid #dfe1e6;
+    position: relative;
+    top: -18px;
+    left: 500px;
+    background-color: #fff;
+    border-radius:3px;
+    box-shadow:rgb(0 0 0 / 10%) 0px 5px 10px 0px;
+    
+
+}
+.modalControl:hover{
+    color: #317dd4;
+}
+.search{
+
+}
+.symbol{
+
+}
+.searchInput{
+
+}
+
+@keyframes slide{
+    from   {
+        left: -700;
+       
+    }
+    to {
+        left: 0;
+       
+    }
+}

@@ -11,21 +11,23 @@ import { authSlice } from "../../redux/authSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { GlobalContex } from "../../App";
+import SearchIssue from "../../pages/SearchIssue/SearchIssue";
 
 
 const NavBar = () => {
-  const notifyLogOut = () => {
-    return toast.success("Log out !", {
-      position: toast.POSITION.TOP_RIGHT,
-    });
-  };
+  // const notifyLogOut = () => {
+  //   return toast.success("Log out !", {
+  //     position: toast.POSITION.TOP_RIGHT,
+  //   });
+  // };
   
   // mở rông navbar
   const [isExtent, setIsExtent] = useState(false);
   const user = useContext(GlobalContex)?.user
   const setUser = useContext(GlobalContex)?.setUser
-  
-  
+  // modal search
+  const [isOpen , setIsOpen] = useState(false)
+  const projectId = useSelector(state => state.project?.projectInfor?.id)
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -38,13 +40,30 @@ const NavBar = () => {
 
 
 }, [location])
+
   const handleLogOut = () => {
     dispatch(authSlice.actions.logout());
     navigate("/signIn", { replace: true });
     console.log("log out");
     setUser(null);
-    notifyLogOut();
+    // notifyLogOut();
   };
+  const handleOpenCreateIssue = ()=>{
+    if(projectId){
+      navigate(`/project/create/${projectId}`, { replace: true });
+    }
+    else{
+      navigate(`/page/notFond`, { replace:true });
+    }
+  }
+  const handleSearchIssues = () => {
+   if(projectId){
+    navigate(`/search/issues/${projectId}`,{replace:true});
+   }
+   else{
+    navigate(`/page/notFond`, { replace:true });
+   }
+  }
   
   
 
@@ -62,7 +81,7 @@ const NavBar = () => {
         {/* user information */}
         {user && (
           <div className={"flex flex-row w-full gap-3 mt-4 ml-4 h-[50px]"}>
-            <Avatar />
+            <Avatar imageUrl = {user?.user?.avatarUrl} />
             <p
               className={clsx("", {
                 [styles.hidden]: !isExtent,
@@ -74,11 +93,16 @@ const NavBar = () => {
         )}
         {/* top icons */}
         <div className={clsx(styles.topIcon , 'relative')}>
-          <AiOutlineProject onClick={()=>{setIsopen(!isOpen)}}  size={"32px"} />
+          <AiOutlineProject onClick={()=>{
+            navigate("/",{replace:true})
+          }}  size={"32px"} />
             
         </div>
         {/* action  */}
-        <div className={styles.action}>
+        <div onClick={()=>{
+          handleSearchIssues()
+          setIsExtent(!isExtent)
+          }} className={styles.action}>
           <BiSearch size={"28px"} className={styles.icons} />
           <p
             className={clsx(styles.action_text, { [styles.hidden]: !isExtent })}
@@ -86,7 +110,10 @@ const NavBar = () => {
             SEARCH ISSUES
           </p>
         </div>
-        <div className={styles.action}>
+        <div onClick={()=>{
+          handleOpenCreateIssue()
+
+        }} className={styles.action}>
           <MdAdd size={"28px"} className={styles.icons} />
           <p
             className={clsx(styles.action_text, { [styles.hidden]: !isExtent })}
@@ -147,7 +174,8 @@ const NavBar = () => {
           </p>
         </div>
       </div>
-      <ToastContainer />
+      
+      
     </div>
   );
 };

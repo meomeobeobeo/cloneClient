@@ -1,21 +1,33 @@
-import React from "react";
-import {useDispatch} from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import { getDetailProject } from "../../action/projectAction";
+import NotFont from "../NotFond/NotFont";
 import BoardContent from "./BoardContent";
 import BoardFilter from "./BoardFilter";
 import BoardHeader from "./BoardHeader";
 import styles from "./styles.module.scss";
 
 const Board = () => {
-    const dispath = useDispatch();
+  
+  const {projectId} = useParams()
+  if(!projectId){
+    return <NotFont/>
+  }
+  useEffect(() =>{
+    dispatch(getDetailProject(projectId));
+  },[])
 
-    return (
-        <div className={styles.body}>
-            <BoardHeader/>
-            <BoardFilter/>
-            <BoardContent/>
+  const dispatch = useDispatch();
+  
 
-        </div>
-    );
+  return (
+    <div className={styles.body}>
+      <BoardHeader />
+      <BoardFilter />
+      <BoardContent />
+    </div>
+  );
 };
 
-export default Board;
+export default React.memo(Board)

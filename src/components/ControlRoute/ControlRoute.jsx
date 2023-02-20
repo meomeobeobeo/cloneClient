@@ -8,18 +8,20 @@ import {HiOutlineDocumentReport} from 'react-icons/hi'
 import {RxComponentBoolean} from 'react-icons/rx'
 import {Link, useLocation} from 'react-router-dom'
 import clsx from "clsx"
+import { useSelector } from 'react-redux'
 
 
 const ControlRoute = () => {
    
     let {pathname} = useLocation()
+    const project = useSelector(state => state.project.projectInfor)
 
     return (
         <div className={styles.body}>
-            <HeaderControl/>
-            <Link to={"/project/board"}>
+            <HeaderControl nameProject={project?.name} project_category = {project?.category}  />
+            <Link to={`/project/board/${project?.id}`}>
                 <div
-                    className={pathname === "/project/board" ? clsx(styles.linkButton, styles.active) : styles.linkButton}>
+                    className={pathname.includes("/project/board/") ? clsx(styles.linkButton, styles.active) : styles.linkButton}>
                     <CiKeyboard size={"24px"}/>
                     <span className={styles.btnContent}> Kaban Board</span>
 

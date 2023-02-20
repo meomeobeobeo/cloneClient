@@ -1,16 +1,19 @@
 import clsx from "clsx";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { getDetailProject } from "../../action/projectAction";
 
 const Listproject = ({ isOpen, setIsOpen }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleLoadProject = (projectId) => {
     dispatch(getDetailProject(projectId));
+    navigate(`project/board/${projectId}`,{replace:true})
   };
 
   const listProjects = useSelector((state) => state.listProjects.listInfor);
-  console.log(listProjects);
+
   return (
     <div
       className={clsx(
