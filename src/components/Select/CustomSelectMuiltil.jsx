@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import chroma from "chroma-js";
 import makeAnimated from "react-select/animated";
 import { colourOptions } from "./data";
@@ -11,19 +11,30 @@ const CustomSelectMuiltil = ({
   values,
   setValues,
   getOptionLabel,
+  defaultValues,
+  action
 }) => {
+  const [selectedValues, setSelectedValues] = useState(defaultValues);
   const handleChange = (options) => {
+   
     setValues(options);
   };
+
 
   return (
     <Select
       closeMenuOnSelect={false}
       isMulti
       options={options}
-      onChange={handleChange}
+      onChange={(e)=>{
+        handleChange(e);
+        if(action){
+          action()
+        }
+      }}
       value={values}
       components={animatedComponents}
+     
     />
   );
 };

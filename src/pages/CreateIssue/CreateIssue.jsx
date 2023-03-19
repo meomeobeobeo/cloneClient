@@ -9,6 +9,11 @@ import { BsFillBookmarkFill } from "react-icons/bs";
 import { MdError } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import TimeKeeper from "react-timekeeper";
+import moment from "moment";
+import { DayPicker } from "react-day-picker";
+import "react-day-picker/dist/style.css";
+
 import { createNewIssue } from "../../action/projectAction";
 import { GlobalContex } from "../../App";
 import Avatar from "../../components/Avata/Avatar";
@@ -17,10 +22,6 @@ import CustomSelectOne from "../../components/Select/CustomSelectOne";
 import TextEditer from "../../components/TextEditer/TextEditer";
 import NotFont from "../NotFond/NotFont";
 import styles from "./styles.module.scss";
-
-
-
-
 
 const CreateIssue = () => {
   const navigate = useNavigate();
@@ -36,18 +37,33 @@ const CreateIssue = () => {
     { value: "4", label: "Hight" },
     { value: "5", label: "Highest" },
   ];
-  const dispatch = useDispatch()
-  const [title , setTitle] = useState("")
+  const dispatch = useDispatch();
+  const [title, setTitle] = useState("");
   const [typeChoose, setTypeChoose] = useState("");
   const [description, setDescription] = useState("");
   const [reporterId, setReporterId] = useState("");
   const [priority, setPriority] = useState("");
   const [assigneesId, setAssigneesId] = useState([]);
+  const [expireTime, setExpireTime] = useState(moment().format("h:mm a"));
+  const [expireDate, setExpireDate] = useState(moment());
+
+  // setup data time
+  let timeData = moment();
+  let hourAndMinute = moment(expireTime, "h:mm a");
+
+  let getDate = moment(expireDate).format("MMMM Do YYYY");
+  let date = moment(getDate, "MMMM Do YYYY");
+
+  let footer = <p>Please pick a day.</p>;
+  if (expireDate) {
+    footer = <p>Expire time is {moment(expireDate).format("MMMM Do YYYY")}.</p>;
+  }
+
   const listUserInfor = useSelector(
     (state) => state.project.projectInfor?.users
   );
-  if(!listUserInfor){
-    return <NotFont/>
+  if (!listUserInfor) {
+    return <NotFont />;
   }
 
   const userSelecOptionForSelectOne = listUserInfor.map((user, index) => {
@@ -73,7 +89,7 @@ const CreateIssue = () => {
       ),
     };
   });
-
+  // label select type
   const getOptionLabelTypeIssue = (option) => (
     <div className="flex items-center gap-2 ">
       {option.value === "task" && (
@@ -89,43 +105,43 @@ const CreateIssue = () => {
     </div>
   );
 
+  const { projectId } = useParams();
+  if (!projectId) {
+    return <NotFont />;
+  }
 
-const {projectId} = useParams()
-if(!projectId) {
-  return <NotFont/>
-}
+  const currenUserId = useContext(GlobalContex)?.user?.user?.id;
 
-
-const currenUserId = useContext(GlobalContex)?.user?.user?.id
-
-
-const formData = {
-  title : title,
-  type : typeChoose?.value,
-  priority : priority?.value,
-  userCreateId : currenUserId,
-  description : description,
-  reporterId : reporterId.value,
-  assigneesId : assigneesId.map(data => data.value)
-
-  
-}
-
+  const formData = {
+    title: title,
+    type: typeChoose?.value,
+    priority: priority?.value,
+    userCreateId: currenUserId,
+    description: description,
+    reporterId: reporterId.value,
+    assigneesId: assigneesId.map((data) => data.value),
+  };
 
   // function
-   
 
   function handleGoKaban() {
-    navigate(`/project/board/${projectId}`,{replace :true});
+    navigate(`/project/board/${projectId}`, { replace: true });
   }
 
-  const handleCreateIssues = async ()=>{
-    
-    dispatch(createNewIssue({projectId  , formData }))
-    navigate(`/project/board/${projectId}`,{replace :true});
-    
-  }
+  const handleCreateIssues = async () => {
+    timeData.set({
+      hour: hourAndMinute.hour(),
+      minute: hourAndMinute.minute(),
+      date: date.date(),
+      year: date.year(),
+      month: date.month(),
+    });
+    console.log(timeData);
+    dispatch(createNewIssue({ projectId : projectId, formData:{...formData,expireTime : timeData} }));
+    // update data to project detail
 
+    navigate(`/project/board/${projectId}`, { replace: true });
+  };
 
   return (
     <div className={styles.modal}>
@@ -154,7 +170,13 @@ const formData = {
             Short summary
           </div>
           <div className="h-[32px] w-full ">
-            <input value={title} onChange={(e)=>{setTitle(e.target.value)}} className="w-full h-[100%] px-[8px] text-[#172b4d] text-[15px] bg-[#f4f5f7] border-[1px] border-solid border-[#f4f5f7] focus-within:outline-blue-400" />
+            <input
+              value={title}
+              onChange={(e) => {
+                setTitle(e.target.value);
+              }}
+              className="w-full h-[100%] px-[8px] text-[#172b4d] text-[15px] bg-[#f4f5f7] border-[1px] border-solid border-[#f4f5f7] focus-within:outline-blue-400"
+            />
           </div>
 
           <span className="text-gray-500 text-[13px]">
@@ -203,7 +225,7 @@ const formData = {
           />
         </div>
         {/* choose the priority */}
-        <div className="flex flex-col gap-1 my-4  mb-[100px]">
+        <div className="flex flex-col gap-1">
           <div className="text-gray-500 text-[13px] font-semibold">
             Priority
           </div>
@@ -213,14 +235,52 @@ const formData = {
             setValue={setPriority}
           />
         </div>
+
+        {/* expire time picker */}
+        <div className="flex flex-col gap-1 my-4  mb-[100px]">
+          <div className="text-gray-500 text-[13px] font-semibold">
+            Expire time
+          </div>
+          <div className="flex flex-row justify-center gap-10 mt-2">
+            <TimeKeeper
+              time={expireTime}
+              onChange={(data) => setExpireTime(data.formatted12)}
+            />
+            <div className="bg-blue-400 text-black">
+              <DayPicker
+                mode="single"
+                selected={expireDate}
+                onSelect={(e) => {
+                  setExpireDate(e);
+                }}
+                footer={footer}
+              />
+            </div>
+          </div>
+        </div>
         {/* submit and cancel button */}
         <div className="flex gap-2 mb-5 ">
           <div className="w-[80%]"></div>
           {/* button create issues */}
-          <div onClick={()=>{handleCreateIssues()}} className="bg-blue-700 text-white text-sm font-normal py-2 px-2 hover:opacity-70 cursor-pointer rounded-[4px] ">Create Issue</div>
+          <div
+            onClick={() => {
+              handleCreateIssues();
+              console.log("time" + expireTime);
+              console.log("date" + expireDate);
+            }}
+            className="bg-blue-700 text-white text-sm font-normal py-2 px-2 hover:opacity-70 cursor-pointer rounded-[4px] "
+          >
+            Create Issue
+          </div>
           {/* button cancel : go kaban */}
-          <div onClick={()=>{handleGoKaban()}} className="bg-gray-300 text-gray-800 text-sm font-normal py-2 px-2 hover:opacity-70 cursor-pointer rounded-[4px] ">Calcel</div>
-
+          <div
+            onClick={() => {
+              handleGoKaban();
+            }}
+            className="bg-gray-300 text-gray-800 text-sm font-normal py-2 px-2 hover:opacity-70 cursor-pointer rounded-[4px] "
+          >
+            Calcel
+          </div>
         </div>
       </div>
     </div>

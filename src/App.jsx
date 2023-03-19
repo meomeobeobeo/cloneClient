@@ -21,7 +21,13 @@ import DetailIssues from "./pages/DetailIssue/DetailIssues";
 import CreateIssue from "./pages/CreateIssue/CreateIssue";
 import NotFont from "./pages/NotFond/NotFont";
 import Home from "./pages/Home/Home";
+import CreateProject from "./pages/CreateProject/CreateProject";
 
+import TableDynamic from "./pages/dynamicPage/TableForm/TableFormListIssue";
+import 'antd/dist/reset.css';
+import TableFormListProject from "./pages/dynamicPage/TableForm/TableFormListProject";
+import TableViewer from "./pages/dynamicPage/TableForm/TableViewer";
+import TableView from "./pages/dynamicPage/TableForm/TableView";
 export const GlobalContex = createContext();
 function App() {
   console.log("rerender");
@@ -67,6 +73,18 @@ function App() {
               <Route path = {`/project/create/:projectId`} element={<CreateIssue />} />
               <Route path="/search/issues/:projectId" element={<SearchIssue />} />
               <Route path="/page/notFond" element={<NotFont />} />
+              <Route path="/project/create" element={<CreateProject />} />
+              
+
+              {/* <Route path="/project/tableIssues/:projectId" element={<TableDynamic />} />
+              <Route path="/listProject" element={<TableFormListProject />} /> */}
+
+
+              <Route path="/pageviewer" element={<TableView />} />
+              
+
+
+
               <Route path="*" element={<NotFont />} />
 
               

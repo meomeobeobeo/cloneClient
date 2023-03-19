@@ -22,13 +22,16 @@ export const addUserToProject = createAsyncThunk('/projects/addUserToProject',as
 
 export const createNewIssue = createAsyncThunk('/projects/createNewIssue',async ({projectId  , formData })=>{
     const {data} = await api.createNewIssue({projectId  , formData })
-    console.log(data)
+   
     return data
     
 })
 
 export const updateProjectData = createAsyncThunk('/projects/updateProject',async ({projectId , formData})=>{
     const {data} = await api.updateProjectData({projectId , formData})
-    console.log(data)
+    return data
+})
+export const deleteIssues = createAsyncThunk('/projects/deleteIssues',async ({issueId , project_id})=>{
+    const {data} = await api.deleteIssues({issueId:issueId , project_id : project_id})
     return data
 })

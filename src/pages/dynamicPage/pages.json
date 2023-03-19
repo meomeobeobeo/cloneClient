@@ -1,0 +1,242 @@
+[
+    {
+        "id": "table-project",
+        "databaseName": "project",
+        "table_title": "Project table",
+        "formDataUpdate": {
+            "name": "",
+            "url": "",
+            "category": ""
+            
+        },
+        "formDataCreate": {
+            "name": "", 
+            "url": "",
+            "category": "",
+            "userCreateId":""
+        },
+        "search_field": {
+            "icon": "AiOutlineSearch"
+        },
+        "table_columns": [
+            "Name",
+            "Url",
+            "Category",
+            "Action"
+        ],
+        "methodData":{
+           
+            "createData":"createNewProject",
+            "updateData": "updateProjectData",
+            "deleteData": "deleteProject",
+            "filterData":"filterProject"
+
+        },
+        "buttons": {
+            "search_button": {
+                "button_text": "",
+                "button_icon": "AiOutlineSearch",
+                "variant": ""
+            },
+            "delete_button": {
+                "button_text": "Delete",
+                "button_icon": "FiTrash",
+                "type": "primary"
+            },
+            "edit_button": {
+                "button_text": "Update",
+                "button_icon": "RxUpdate",
+                "type": "primary"
+            },
+            "detail_button": {
+                "button_text": "",
+                "button_icon": "BiCommentDetail",
+                "type": ""
+            },
+            "create_button": {
+                "button_text": "Create",
+                "button_icon": "AiOutlinePlus",
+                "type": "primary"
+            },
+            "cancel_button": {
+                "button_text": "Cancel",
+                "button_icon": "",
+                "variant": "default"
+            }
+        },
+        "modal": {
+
+            "title": "project modal",
+            "schema": [
+                {
+                    "id": "project_name",
+                    "name":"name",
+                    "label": "Project name",
+                    "placeholder": "Project name",
+                    "html_element": "text"
+                },
+                {
+                    "id": "project_url",
+                    "name":"url",
+                    "label": "Project url",
+                    "placeholder": "url",
+                    "html_element": "text"
+                },
+                {
+                    "id": "project_category",
+                    "name":"category",
+                    "label": "Project category",
+                    "options": [
+                        {
+                            "label": "SoftWare",
+                            "value": "software"
+                        },
+                        {
+                            "label": "bussiness",
+                            "value": "Bussiness"
+                        },
+                        {
+                            "label": "Marketing",
+                            "value": "marketing"
+                        }
+                    ],
+                    "html_element": "select"
+                }
+            ]
+        },
+        "modal_delete": {
+            "title": "Confirm delete data"
+        }
+    },
+    {
+        "id": "table-reports",
+        "table_title": "Report table",
+        "databaseName": "reports",
+        "formDataUpdate": {
+            "title": "",
+            "type": "",
+            "priority": "",
+            "content":""
+            
+        },
+        "formDataCreate": {
+            "title": "",
+            "type": "",
+            "priority": "",
+            "content":""
+        },
+        "search_field": {
+            "icon": "AiOutlineSearch"
+        },
+        "table_columns": [
+            "Title",
+            "Type",
+            "Priority",
+            "Content",
+            "Action"
+        ],
+        "methodData":{
+           
+            "createData":"createReport",
+            "updateData": "updateReport",
+            "deleteData": "deleteReport",
+            "filterData":"filterReport"
+
+        },
+        "buttons": { 
+            "search_button": {
+                "button_text": "",
+                "button_icon": "AiOutlineSearch",
+                "variant": ""
+            },
+            "delete_button": {
+                "button_text": "Delete",
+                "button_icon": "FiTrash",
+                "type": "primary"
+            },
+            "edit_button": {
+                "button_text": "Update",
+                "button_icon": "RxUpdate",
+                "type": "primary"
+            },
+            "detail_button": {
+                "button_text": "",
+                "button_icon": "BiCommentDetail",
+                "type": ""
+            },
+            "create_button": {
+                "button_text": "Create",
+                "button_icon": "AiOutlinePlus",
+                "type": "primary"
+            },
+            "cancel_button": {
+                "button_text": "Cancel",
+                "button_icon": "",
+                "variant": "default"
+            }
+        },
+        "modal": {
+
+            "title": "Report modal",
+            "schema": [
+                {
+                    "id": "report_title",
+                    "name":"title",
+                    "label": "report title",
+                    "placeholder": "report title",
+                    "html_element": "text"
+                },
+                {
+                    "id": "report_content",
+                    "name":"content",
+                    "label": "Report content",
+                    "placeholder": "Content",
+                    "html_element": "text"
+                },
+                {
+                    "id": "report_priority",
+                    "name":"priority",
+                    "label": "Report priority",
+                    "options": [
+                        {
+                            "label": "Low",
+                            "value": "low"
+                        },
+                        {
+                            "label": "Medium",
+                            "value": "medium"
+                        },
+                        {
+                            "label": "High",
+                            "value": "high"
+                        }
+                    ],
+                    "html_element": "select"
+                },
+                {
+                    "id": "report_type",
+                    "name":"type",
+                    "label": "Report type",
+                    "options": [
+                        {
+                            "label": "Bug",
+                            "value": "bug"
+                        },
+                        {
+                            "label": "Task",
+                            "value": "task"
+                        },
+                        {
+                            "label": "Story",
+                            "value": "story"
+                        }
+                    ],
+                    "html_element": "select"
+                }
+            ]
+        },
+        "modal_delete": {
+            "title": "Confirm delete data"
+        }
+    } 
+]

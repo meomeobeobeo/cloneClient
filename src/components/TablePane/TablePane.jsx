@@ -29,6 +29,7 @@ const TablePane = ({
                     return (
                         <Draggable key={item.id} draggableId={item.id} index={index}>
                             {(providedChild, snapshot) => {
+                                // console.log(snapshot)
                                 return (
                                     <div
                                         ref={providedChild.innerRef}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Children, useState } from "react";
 import styles from './styles.module.scss'
 const ModalCreateIssue = () => {
   const [modal, setModal] = useState(false);
@@ -24,14 +24,9 @@ const ModalCreateIssue = () => {
           <div onClick={toggleModal} className={styles.overlay}></div>
           <div className={styles.modalContent}>
             <h2>Hello Modal</h2>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident
-              perferendis suscipit officia recusandae, eveniet quaerat assumenda
-              id fugit, dignissimos maxime non natus placeat illo iusto!
-              Sapiente dolorum id maiores dolores? Illum pariatur possimus
-              quaerat ipsum quos molestiae rem aspernatur dicta tenetur. Sunt
-              placeat tempora vitae enim incidunt porro fuga ea.
-            </p>
+            
+             {Children}
+            
             <button className={styles.close-modal} onClick={toggleModal}>
               CLOSE
             </button>

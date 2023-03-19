@@ -10,15 +10,20 @@ const customStyles = {
 };
 
 
-const CustomSelectOne = ({ options , value , setValue , getOptionLabel }) => {
-
+const CustomSelectOne = ({ options , value , setValue , getOptionLabel , defaultValue  }) => {
+ 
+  
   const handleChange = (selectedOption, action) => {
     setValue(selectedOption);
     
   }
 
   return (
-    <Select getOptionLabel={getOptionLabel}  value={value} onChange = {handleChange} className="custom-select" options={options} styles={customStyles} />
+   
+    <Select defaultValue={defaultValue} getOptionLabel={getOptionLabel}  value={value} onChange = {(e)=>{
+      
+      handleChange(e)
+    }} className="custom-select" options={options} styles={customStyles} />
   );
 };
 

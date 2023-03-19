@@ -12,10 +12,31 @@ import clsx from "clsx";
 import { useLocation, useNavigate } from "react-router-dom";
 import DetailIssues from "../../pages/DetailIssue/DetailIssues";
 import { useSelector } from "react-redux";
+import * as api from "../../../api/index";
+import moment from "moment";
 
+const ListAvatar = ({ listUserIds }) => {
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+    const req = api.getUserInforFromListUserId(listUserIds);
+    req.then((data) => {
+      setUsers(data.data);
+    });
+  }, []);
+  return (
+    <div className="flex ">
+      {users.map((user) => {
+        return (
+          <div key={user?.id} className="flex items-center">
+            <Avatar size="20px" imageUrl={user?.avatarUrl} />
+          </div>
+        );
+      })}
+    </div>
+  );
+};
 const Issue = ({ snapshot, item }) => {
-  
-
+ 
   const [issue_type_status, set_issue_type_status] = useState({
     task: false,
     bug: false,
@@ -29,6 +50,15 @@ const Issue = ({ snapshot, item }) => {
     lowest: false,
   });
   const navigate = useNavigate();
+  useEffect(() => {
+    const timeUp = moment(item.expireTime);
+    const timeDown = moment();
+    const subtractTime = moment(timeUp).diff(moment(timeDown));
+    if (subtractTime < 0 && !item.isExpire ) {
+      console.log('update')
+      updateStatusIsExpired()
+    }
+  }, []);
 
   useEffect(() => {
     // check issue
@@ -53,17 +83,22 @@ const Issue = ({ snapshot, item }) => {
     }
   }, [item]);
 
+  // function
+  const updateStatusIsExpired = async () => {
+    await api.updateIssue({ id: item.id, formData: { isExpire: true } });
+  };
+
   return (
     <>
       <div
         className={clsx(
           "bg-[#fff] flex flex-col touch-manipulation p-2 rounded-[4px] shadow-sm hover:bg-gray-300 my-1 mx-1 transition duration-100 ease-in delay-[0ms] select-none  ",
-          { "rotate-[4deg] scale-[1.1] ": snapshot.isDragging }
+          { "rotate-[4deg] scale-[1.1] ": snapshot.isDragging },
+          { "bg-red-200 hover:bg-red-300": item?.isExpire }
         )}
         onClick={() => {
           navigate(`?issueId=${item.id}`, { replace: true });
           // action to go Detail issues
-    
         }}
       >
         <span className="text-sm text-gray-800 font-[500] text-[15px] w-full normal-case leading-[1.4285rem] ">
@@ -102,7 +137,7 @@ const Issue = ({ snapshot, item }) => {
           </div>
           {/* list avatar */}
           <div>
-            <Avatar size={"20px"} />
+            <ListAvatar listUserIds={item.assigneesId}  />
           </div>
         </div>
       </div>

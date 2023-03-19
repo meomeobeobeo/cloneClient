@@ -10,12 +10,11 @@ import { inprogressSlice } from "../../redux/inprogressSlice";
 import { doneSlice } from "../../redux/doneSlice";
 import { useLocation } from "react-router-dom";
 import DetailIssues from "../DetailIssue/DetailIssues";
-
+import * as api from "../../../api/index";
 const BoardContent = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const issueIdQuery = searchParams.get("issueId");
-
 
   const dispath = useDispatch();
 
@@ -30,10 +29,11 @@ const BoardContent = () => {
   );
 
   // function quản lí hành động kéo thả và thay đổi trạng thái
-  const onDragEnd = (result, columns, setColumns) => {
+  const onDragEnd = async (result, columns, setColumns) => {
     if (!result.destination) return;
     const { source, destination } = result;
 
+    //  neu di chuyen cung cot or di chuyen khac cot
     if (source.droppableId === destination.droppableId) {
       if (source.droppableId === "backlogData") {
         const data = [...backlogData]; // get data column
@@ -41,6 +41,11 @@ const BoardContent = () => {
         const [removed] = data.splice(source.index, 1);
         data.splice(destination.index, 0, removed);
         dispath(backlogSlice.actions.updateIssues(data));
+
+        try {
+        } catch (error) {
+          console.log(error);
+        }
       } else if (source.droppableId === "selectedData") {
         const data = [...selectedData]; // get data column
 
@@ -76,6 +81,9 @@ const BoardContent = () => {
       const destItems = [...destColumn];
       const [removed] = sourceItems.splice(source.index, 1);
       destItems.splice(destination.index, 0, removed);
+
+      const newStatus = destination.droppableId.replace("Data", "");
+      
       const listSice = [
         backlogSlice,
         doneSlice,
@@ -92,6 +100,12 @@ const BoardContent = () => {
           dispath(slice.actions.updateIssues(destItems));
         }
       });
+      // call api update to data base
+      try {
+        await api.updateIssue({id:removed.id , formData : {status : newStatus}})
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -146,8 +160,7 @@ const BoardContent = () => {
           </Droppable>
         </div>
       </DragDropContext>
-      {issueIdQuery && <DetailIssues/>}
-
+      {issueIdQuery && <DetailIssues />}
     </>
   );
 };

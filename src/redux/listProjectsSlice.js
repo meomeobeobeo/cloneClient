@@ -8,6 +8,9 @@ export const listProjectsSlice = createSlice({
         listInfor:[]
     },
     reducers:{
+        addProjectIdToListProject :(state , action)=>{
+            state.listInfor.push(action.payload);
+        }
 
     },
     extraReducers:(builder)=>{

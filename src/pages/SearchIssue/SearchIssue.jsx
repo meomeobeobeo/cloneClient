@@ -5,14 +5,12 @@ import { AiFillCheckSquare } from "react-icons/ai";
 import { BsFillBookmarkFill, BsSearch } from "react-icons/bs";
 import { MdError } from "react-icons/md";
 import { useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { searchIssuesFromSummaryOrDescription } from "../../../api";
 import styles from "./styles.module.scss";
 const SearchIssue = () => {
-
   const { projectId } = useParams();
-  console.log("project id : "+projectId);
-  
+  console.log("project id : " + projectId);
 
   // return 404 not find when not have choose project id
 
@@ -28,8 +26,12 @@ const SearchIssue = () => {
     });
   }, [searchText]);
   const handleNavigateProjectBoard = () => {
-    navigate(`/project/board/${projectId}`,{replace :true});
+    navigate(`/project/board/${projectId}`, { replace: true });
   };
+  const navigateToDetail = (issueId) => {
+    navigate(`/project/board/${projectId}?issueId=${issueId}`, { replace: true });
+    
+  }
 
   return (
     <>
@@ -45,7 +47,7 @@ const SearchIssue = () => {
             <div
               className={styles.modalControl}
               onClick={() => {
-                handleNavigateProjectBoard()
+                handleNavigateProjectBoard();
               }}
             >
               X
@@ -67,12 +69,18 @@ const SearchIssue = () => {
             {/* result of search  */}
             {projectId && (
               <div className="flex flex-col items-center mt-8 gap-2 w-full mb-8">
-                {searchResult.length ===0 ? <div>Search result is empty.</div>:<div>Search result is under.</div>}
+                {searchResult.length === 0 ? (
+                  <div>Search result is empty.</div>
+                ) : (
+                  <div>Search result is under.</div>
+                )}
                 {searchResult.map((issue, index) => {
                   return (
-                    <div className="w-full" key={issue.id}>
-                      <SummaryIssue issue={issue} />
-                    </div>
+                    
+                      <div onClick={()=>{navigateToDetail(issue.id)}} className="w-full" key={issue.id}>
+                        <SummaryIssue issue={issue} />
+                      </div>
+                  
                   );
                 })}
               </div>

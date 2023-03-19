@@ -121,7 +121,7 @@ const NavBar = () => {
             CREATE ISSUES
           </p>
         </div>
-        <div className={styles.action}>
+        <div onClick={()=>{navigate('/project/create',{replace:true})}} className={styles.action}>
           <MdAdd size={"28px"} className={styles.icons} />
           <p
             className={clsx(styles.action_text, { [styles.hidden]: !isExtent })}
