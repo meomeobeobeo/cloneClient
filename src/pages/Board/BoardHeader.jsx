@@ -37,12 +37,14 @@ const project = useSelector(state => state.project.projectInfor)
           )}
         >
           {users.map((user, index) => {
+            let avartarUrl = user.avatarUrl !== ""?user.avatarUrl:'https://drive.google.com/uc?export=view&id=1D6OsAvPuq2QjabpJjMOpRupKHL72e12q'
+          
             return (
               <div
                 key={user.id}
                 className="flex flex-row  items-center p-2 px-4 rounded-[2px] cursor-pointer gap-2 relative border-b-2 border-gray-500 hover:bg-slate-400"
               >
-                <Avatar imageUrl = {user.avatarUrl} size={"24px"} />
+                <Avatar imageUrl = {avartarUrl} size={"24px"} />
                 <span className="">{user.name}</span>
                 <MdAdd
                     onClick={()=>{

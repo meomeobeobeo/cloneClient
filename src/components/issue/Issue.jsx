@@ -93,7 +93,7 @@ const Issue = ({ snapshot, item }) => {
       <div
         className={clsx(
           "bg-[#fff] flex flex-col touch-manipulation p-2 rounded-[4px] shadow-sm hover:bg-gray-300 my-1 mx-1 transition duration-100 ease-in delay-[0ms] select-none  ",
-          { "rotate-[4deg] scale-[1.1] ": snapshot.isDragging },
+          { "rotate-[4deg] scale-[1.1] bg-red-100 ": snapshot.isDragging },
           { "bg-red-200 hover:bg-red-300": item?.isExpire }
         )}
         onClick={() => {

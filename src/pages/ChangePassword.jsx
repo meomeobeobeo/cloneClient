@@ -80,7 +80,7 @@ const  ChangePassword = () => {
             onClick={() => {
               handleChangePassWord({ email: email, password: password , newPassword : newPassword });
             }}
-            className="bg-blue-500 text-[#fff] text-[24px]  rounded-md hover:opacity-[0.5] m-auto w-[240px] flex justify-center items-center p-1 mt-4 "
+            className="bg-blue-500 text-[#fff] text-[24px]  rounded-xl hover:opacity-[0.5]  w-[240px] flex justify-center items-center p-1 mt-4 "
           >
             <span>Change password</span>
           </div>
