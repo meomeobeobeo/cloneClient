@@ -24,10 +24,10 @@ import Home from "./pages/Home/Home";
 import CreateProject from "./pages/CreateProject/CreateProject";
 
 import TableDynamic from "./pages/dynamicPage/TableForm/TableFormListIssue";
-import 'antd/dist/reset.css';
 import TableFormListProject from "./pages/dynamicPage/TableForm/TableFormListProject";
 import TableViewer from "./pages/dynamicPage/TableForm/TableViewer";
 import TableView from "./pages/dynamicPage/TableForm/TableView";
+import ChangePassword from "./pages/ChangePassword";
 export const GlobalContex = createContext();
 function App() {
   console.log("rerender");
@@ -74,6 +74,7 @@ function App() {
               <Route path="/search/issues/:projectId" element={<SearchIssue />} />
               <Route path="/page/notFond" element={<NotFont />} />
               <Route path="/project/create" element={<CreateProject />} />
+              <Route path="/changePassword" element={<ChangePassword />} />
               
 
               {/* <Route path="/project/tableIssues/:projectId" element={<TableDynamic />} />
@@ -94,6 +95,7 @@ function App() {
           </div>
         )}
       </div>
+      <ToastContainer />
     </GlobalContex.Provider>
   );
 }

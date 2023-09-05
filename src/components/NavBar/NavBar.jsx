@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import styles from "./styles.module.scss";
 import { BiLogIn, BiLogOut, BiSearch } from "react-icons/bi";
 import { MdAdd } from "react-icons/md";
-import { AiOutlineProject, AiOutlineQuestionCircle } from "react-icons/ai";
+import { AiOutlineProject, AiOutlineQuestionCircle , AiOutlineUser } from "react-icons/ai";
 import clsx from "clsx";
 
 import Avatar from "../Avata/Avatar";
@@ -99,6 +99,19 @@ const NavBar = () => {
             
         </div>
         {/* action  */}
+
+
+        <div onClick={()=>{
+          navigate(`/changePassword`,{replace:true})
+
+        }} className={styles.action}>
+          <AiOutlineUser size={"28px"} className={styles.icons} />
+          <p
+            className={clsx(styles.action_text, { [styles.hidden]: !isExtent })}
+          >
+            CHANGE PASSWORD
+          </p>
+        </div>
         <div onClick={()=>{
           handleSearchIssues()
           setIsExtent(!isExtent)
@@ -121,6 +134,9 @@ const NavBar = () => {
             CREATE ISSUES
           </p>
         </div>
+
+        
+
         <div onClick={()=>{navigate('/project/create',{replace:true})}} className={styles.action}>
           <MdAdd size={"28px"} className={styles.icons} />
           <p

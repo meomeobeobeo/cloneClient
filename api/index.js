@@ -52,6 +52,9 @@ export const filterProject = ({searchText})=>{
   
   return API.get(`/blue/projects?where={"name":{"contains":"${searchText}"}}`)
 }
+export const changePassword = ({email : email , password : password , newPassword : newPassword})=>{
+  return API.patch(`/users/changeInfo`,{email : email , password : password , newPassword : newPassword})
+}
 
 
 
